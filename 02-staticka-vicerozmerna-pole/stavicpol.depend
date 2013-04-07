@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1361139705 source:/home/ela/Plocha/UPOL/ZP2/stavicpol/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<limits.h>
+
