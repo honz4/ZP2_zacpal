@@ -61,18 +61,19 @@ int soucty(const char *vstup) {
   while (!done) {
 	//fgets(buf, 1024, fvstup)  ;
 	//printf("%s \n", buf)  ; continue;
-	n = fscanf(fvstup, "%d/%d", &z1.citatel, &z1.jmenovatel);
+	n = fscanf(fvstup, "%d%*[ \t/]%d", &z1.citatel, &z1.jmenovatel);
 	switch (n) {
-	    case 2: //zlomek
-	    print_zlomek(z1);//ladeni
+	case 2: //zlomek
+	    //print_zlomek(z1);//ladeni
+	    //pokud jdeme poprve: zsum inicializujem na z1, jinak pricitame
+	    zsum = (zsum.citatel==0) ? z1 : soucet_zlomku(z1, zsum);
 	    break;
-	    case EOF:
-		done = 1; break;
-	    case 0:
-	    default: printf("n = %d", n);
+	case EOF:
+	     done = 1; break;
+	case 0:
+	default:
+	     printf("n = %d\n", n);
 	}
-    //pokud jdeme poprve: zsum inicializujem na z1, jinak pricitame
-     zsum = (zsum.citatel==0) ? z1 : soucet_zlomku(z1, zsum);
   }
   fprintf(fvstup, "%d/%d\n", zsum.citatel, zsum.jmenovatel);
   fclose(fvstup);
