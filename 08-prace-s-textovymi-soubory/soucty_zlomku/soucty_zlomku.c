@@ -2,9 +2,24 @@
 #include <stdlib.h>
 #include <errno.h>
 
-/*
-*
-*
+/* Napište v jazyku C funkci zlomek soucet(const char *vstup),
+ která čte ze vstupního textového souboru vstup zlomky (resp. dvojice celých čísel),
+  vypočítává a vrací součet všech zlomků zapsaných ve vstupním souboru.
+   Pro snadnější práci se zlomky si definujte strukturovaný typ zlomek.
+   Výsledný zlomek by měl být upraven do základního tvaru.
+   Vykrácení zlomku do základního tvaru docílíte vydělením čitatele i jmenovatele jejich největším společným dělitelem,
+   který můžete určit například použitím Euklidova algoritmu.
+
+   - zapisuje se do stejneho souboru
+   - jeden zlomek na radek? ne nutne, pro scanf() je \n bily znak!
+   - cislo/cislo je scanf "%d/%d"  no problem
+   - cislo/   cislo dtto
+   - cislo    /cislo je problem!!! trochu pomuze scanf "%d%*[ \t/]%d"
+   - otazka je, jestli se trapit se scanf() na tyto veci lepe lexer/parser?
+   - nebo RegExp? RE je/neni v libc?, regex.h je POSIX
+   - nebo strtok()?
+
+honz4: IMO, nez by tato cviceni demostrovala FILE* operace, jde spise o sachovani se scanf()!
 */
 
 
@@ -45,11 +60,15 @@ Zlomek soucet_zlomku (Zlomek z1, Zlomek z2)
     }
 
 
+/** zadani viz hlavicka souboru.
+ *
+ * @return asi chybovy kod? v zadani neurceno
+ */
 int soucty(const char *vstup) {
   FILE* fvstup;
   int n;
   Zlomek z1;
-  Zlomek zsum={0,0};//to je blbost inicializovat 0/0!!!
+  Zlomek zsum={0,0};//NOTE: trochu rizikovy zlomek ;-) slouzi jako sentinel!
   int done = 0;
 
   fvstup = fopen(vstup, "r+");
@@ -61,7 +80,7 @@ int soucty(const char *vstup) {
   while (!done) {
 	//fgets(buf, 1024, fvstup)  ;
 	//printf("%s \n", buf)  ; continue;
-	n = fscanf(fvstup, "%d%*[ \t/]%d", &z1.citatel, &z1.jmenovatel);
+	n = fscanf(fvstup, "%d%*[ \t/]/%d", &z1.citatel, &z1.jmenovatel);
 	switch (n) {
 	case 2: //zlomek
 	    //print_zlomek(z1);//ladeni
@@ -73,6 +92,9 @@ int soucty(const char *vstup) {
 	case 0:
 	default:
 	     printf("n = %d\n", n);
+	     done = 1;//spatny format vstupniho souboru!
+	     //tady to zpusobi chybu!!! done=1 => zapise zsum treba doprostred fvstup!!!
+	     //pripadne pozor na return bez fclose()!
 	}
   }
   fprintf(fvstup, "%d/%d\n", zsum.citatel, zsum.jmenovatel);
@@ -87,5 +109,5 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     soucty(argv[1]);
-    return 0;
+    return 0;//EXIT_SUCCESS
 }
