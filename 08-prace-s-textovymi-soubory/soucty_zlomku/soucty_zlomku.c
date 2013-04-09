@@ -70,6 +70,7 @@ int soucty(const char *vstup) {
   Zlomek z1;
   Zlomek zsum={0,0};//NOTE: trochu rizikovy zlomek ;-) slouzi jako sentinel!
   int done = 0;
+  int rc=0;
 
   fvstup = fopen(vstup, "r+");
   if ( fvstup == NULL ) {
@@ -80,7 +81,7 @@ int soucty(const char *vstup) {
   while (!done) {
 	//fgets(buf, 1024, fvstup)  ;
 	//printf("%s \n", buf)  ; continue;
-	n = fscanf(fvstup, "%d%*[ \t/]/%d", &z1.citatel, &z1.jmenovatel);
+	n = fscanf(fvstup, "%d%*[ \t/]%d", &z1.citatel, &z1.jmenovatel);
 	switch (n) {
 	case 2: //zlomek
 	    //print_zlomek(z1);//ladeni
@@ -91,15 +92,17 @@ int soucty(const char *vstup) {
 	     done = 1; break;
 	case 0:
 	default:
-	     printf("n = %d\n", n);
-	     done = 1;//spatny format vstupniho souboru!
+	     fprintf(stderr, "err: n = %d\n", n);
+	     rc=1;
+	     goto err;//spatny format vstupniho souboru!
 	     //tady to zpusobi chybu!!! done=1 => zapise zsum treba doprostred fvstup!!!
-	     //pripadne pozor na return bez fclose()!
+	     //pripadne pozor na return bez fclose()! pouzijeme goto
 	}
   }
   fprintf(fvstup, "%d/%d\n", zsum.citatel, zsum.jmenovatel);
+err:
   fclose(fvstup);
-  return 0;
+  return rc;
 }
 
 int main(int argc, char* argv[])
