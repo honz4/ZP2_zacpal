@@ -33,15 +33,15 @@ Zlomek kraceni_zlomku (Zlomek z){
 /** makro pro printf() zlomku.
  * @note vyuziva operator # -- stringizace argumentu makra!
  */
-#define print_zlomek(z) printf("%s: %d/%d\n",#z,(z).jmenovatel, (z).citatel)
+#define print_zlomek(z) printf("%s: %d/%d\n",#z,(z).citatel, (z).jmenovatel)
 
 Zlomek soucet_zlomku (Zlomek z1, Zlomek z2)
 {
     Zlomek vysledek;
     vysledek.jmenovatel = z1.jmenovatel * z2.jmenovatel;
     vysledek.citatel = (z1.citatel * z2.jmenovatel) + (z2.citatel * z1.jmenovatel);
-    return vysledek;
-//  return kraceni_zlomku (vysledek);
+//  return vysledek;
+    return kraceni_zlomku (vysledek);
     }
 
 
@@ -71,7 +71,8 @@ int soucty(const char *vstup) {
 	    case 0:
 	    default: printf("n = %d", n);
 	}
-  zsum = soucet_zlomku(z1, zsum);
+    //pokud jdeme poprve: zsum inicializujem na z1, jinak pricitame
+     zsum = (zsum.citatel==0) ? z1 : soucet_zlomku(z1, zsum);
   }
   fprintf(fvstup, "%d/%d\n", zsum.citatel, zsum.jmenovatel);
   fclose(fvstup);
