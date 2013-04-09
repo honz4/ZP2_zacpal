@@ -30,6 +30,11 @@ Zlomek kraceni_zlomku (Zlomek z){
     return z;
 }
 
+/** makro pro printf() zlomku.
+ * @note vyuziva operator # -- stringizace argumentu makra!
+ */
+#define print_zlomek(z) printf("%s: %d/%d\n",#z,(z).jmenovatel, (z).citatel)
+
 Zlomek soucet_zlomku (Zlomek z1, Zlomek z2)
 {
     Zlomek vysledek;
@@ -39,11 +44,12 @@ Zlomek soucet_zlomku (Zlomek z1, Zlomek z2)
 //  return kraceni_zlomku (vysledek);
     }
 
+
 int soucty(const char *vstup) {
   FILE* fvstup;
   int n;
   Zlomek z1;
-  Zlomek zsum={0,0};
+  Zlomek zsum={0,0};//to je blbost inicializovat 0/0!!!
   int done = 0;
 
   fvstup = fopen(vstup, "r+");
@@ -58,14 +64,13 @@ int soucty(const char *vstup) {
 	n = fscanf(fvstup, "%d/%d", &z1.citatel, &z1.jmenovatel);
 	switch (n) {
 	    case 2: //zlomek
-	    printf("OK %d/%d\n", z1.citatel, z1.jmenovatel);
+	    print_zlomek(z1);//ladeni
 	    break;
 	    case EOF:
 		done = 1; break;
 	    case 0:
 	    default: printf("n = %d", n);
 	}
-
   zsum = soucet_zlomku(z1, zsum);
   }
   fprintf(fvstup, "%d/%d\n", zsum.citatel, zsum.jmenovatel);
