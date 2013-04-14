@@ -14,14 +14,14 @@ další související:
   * setlocale()
   * #include <ctype.h>
   * input/internal/output encoding
-  * [iconv(1)](http://linux.die.net/1/iconv "příkaz iconv") + knihovna libiconv a funkce iconv()
+  * [iconv(1)](http://linux.die.net/man/1/iconv "příkaz iconv") + knihovna libiconv a funkce iconv()
 
 ### binární soubory:
 Obsahují cokoli, nějaké 'binární' formáty, typicky několik úvodních byte představuje signaturu formátu,
-viz [file(1)](http://linux.die.net/1/file "příkaz file")
+viz [file(1)](http://linux.die.net/man/1/file "příkaz file")
 
 # Příklady/úkoly
-by měly využívat připravené soubory [../misc/]()
+by měly využívat připravené soubory [../misc/](../misc)
 
 ## databaze-osob.c
 
