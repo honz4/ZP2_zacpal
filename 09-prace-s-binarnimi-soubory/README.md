@@ -12,7 +12,7 @@ Co je to text:
 
 další související:
   * setlocale()
-  * #include <ctype.h>
+  * #include &gt;ctype.h>
   * input/internal/output encoding
   * [iconv(1)](http://linux.die.net/man/1/iconv "příkaz iconv") + knihovna libiconv a funkce iconv()
 
@@ -23,6 +23,7 @@ viz [file(1)](http://linux.die.net/man/1/file "příkaz file")
 # Příklady/úkoly
 by měly využívat připravené soubory [../misc/](../misc)
 
+##jednotkove-vektory.c
+
 ## databaze-osob.c
 
-##jednotkove-vektory.c

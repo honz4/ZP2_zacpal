@@ -1,3 +1,8 @@
+/** @file
+ * @brief database-osob, ZP2 09 ukol: doplnte vyhledej()
+ *
+ *
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -67,6 +72,7 @@ int main()
     return 0;
 }
 
+/** je rok prestupny? */
 int je_prestupny(unsigned int rok)
 {
     if (rok % 100 == 0)
@@ -75,6 +81,9 @@ int je_prestupny(unsigned int rok)
 	return (rok % 4 == 0);
 }
 
+/** pocet dnu v mesici.
+ * @param mesic 0..11
+ */
 unsigned int pocet_dnu(unsigned int mesic)
 {
     const static int pocet[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -84,6 +93,8 @@ unsigned int pocet_dnu(unsigned int mesic)
 	return 0;
 }
 
+/** generuje nahodne datum.
+ */
 datum generuj_datum(int rok_od, int rok_do)
 {
     char den;
@@ -105,6 +116,8 @@ datum generuj_datum(int rok_od, int rok_do)
     return d;
 }
 
+/** generuje nahodny obsah 'database'.
+ */
 int generator(char *soubor, int pocet)
 {
     int i;

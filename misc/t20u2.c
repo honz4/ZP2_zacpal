@@ -1,10 +1,14 @@
+/** @file
+ * @brief ADT a operace pro bitset (bitova mnozina): DOPLNTE prunik() sjednoceni() rozdil()
+ *
+ */
 #include <stdio.h>
 #include <stdlib.h>
 
-/* struktura reprezentujici mnozinu */
+/** struktura reprezentujici mnozinu. */
 typedef struct {
-    int *prvky;			/* pole pro bitove ulozeni prvku */
-    int pocet;			/* pocet prvku v mnozine */
+    int *prvky;			/**< pole pro bitove ulozeni prvku */
+    int pocet;			/**< pocet prvku v mnozine */
 } mnozina;
 
 void vypis(mnozina A);		/* vypis indexu prvku dane mnoziny na obrazovku */
@@ -60,10 +64,12 @@ int main()
     vypis(C);
     printf("\n");
 
-    system("pause");
+//  system("pause");//arrrrrrrrrrrrrrrrrrgh!
     return 0;
 }
 
+/** printf mnoziny.
+ */
 void vypis(mnozina A)
 {
     long maska;
@@ -99,16 +105,22 @@ void vypis(mnozina A)
     }
 }
 
+/** prunik mnozin A, B.
+ */
 mnozina prunik(mnozina A, mnozina B)
 {
     /* DOPLNTE */
 }
 
+/** sjednoceni mnozin A,B.
+ */
 mnozina sjednoceni(mnozina A, mnozina B)
 {
     /* DOPLNTE */
 }
 
+/** rozdil mnozin A, B
+ */
 mnozina rozdil(mnozina A, mnozina B)
 {
     /* DOPLNTE */

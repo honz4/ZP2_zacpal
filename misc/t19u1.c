@@ -1,3 +1,7 @@
+/** @file
+ * @brief jednotkove vektory: doplnte uprav_data()
+ *
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -25,8 +29,9 @@ int main()
     return 0;
 }
 
-/* funkce vytvori binarni soubor s cisly typu double od 0 do max - 1, 
- * parametr pocet udava pocet cisel v souboru
+/** funkce vytvori binarni soubor s cisly typu double od 0 do max - 1.
+ *
+ * @parame pocet udava pocet cisel v souboru
  */
 int generuj_data(char *nazev, int max, long pocet)
 {
@@ -81,7 +86,10 @@ int generuj_data(char *nazev, int max, long pocet)
     return 0;
 }
 
-/* funkce cte binarni soubor s cisly typu double a vypisuje je na std. vystup */
+/** funkce cte binarni soubor s cisly typu double a vypisuje je na standarni vystup.
+ *
+ * @returns 0:OK, 1,2,3 chybove kody?
+ */
 int precti_data(char *nazev)
 {
     FILE *f;
@@ -112,7 +120,7 @@ int precti_data(char *nazev)
     return 0;
 }
 
-/* funkce pro vypocet delky vektoru urcite DIMENZE */
+/** funkce pro vypocet delky (velikosti) vektoru urcite DIMENZE. */
 double vel_vektor(double *v)
 {
     double out = 0.0;
