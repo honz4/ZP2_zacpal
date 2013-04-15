@@ -42,7 +42,7 @@ int main()
     uprav_data("data.dat");
     printf("\nNova data: \n");
     precti_data("data.dat");
-    system("pause");
+//  system("pause");//honz4: arrrrrrrrrrrrrrrrrrrrgh!
     return 0;
 }
 
@@ -149,5 +149,5 @@ double vel_vektor(double *v)
 
 int uprav_data(char *nazev)
 {
-    /* DOPLNTE */
+    printf("/* DOPLNTE */ %s()\n", __func__);exit(EXIT_FAILURE);//note: __func__ je C99ismus!
 }

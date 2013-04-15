@@ -213,7 +213,7 @@ int generator(char *soubor, int pocet)
 
 int vyhledej(char *soubor, char *kriteria, ...)
 {
-    /* DOPLNTE */
+   printf("funkci %s() v souboru %d na radku %d DOPLNTE!!!\n", __func__, __FILE__, __LINE__); exit(EXIT_FAILURE);
 }
 
 void vypis(osoba o)

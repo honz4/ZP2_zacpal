@@ -27,3 +27,9 @@ by měly využívat připravené soubory [../misc/](../misc)
 
 ## databaze-osob.c
 
+# Poznámky
+Na Unix/Linux (Win: Cygwin, mingw?) lze obsahy binárních souborů inspektovat:
+  * základní detekce viz výše zmíněný _file_
+  * [od(1)](http://linux.die.net/man/1/od) "příkaz od"
+  * binárním editorem *bless*
+  * stringy lze v binárních datech vyhledávat pomocí [strings(1)](http://linux.die.net/man/1/string)
