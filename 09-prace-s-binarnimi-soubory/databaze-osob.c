@@ -211,9 +211,83 @@ int generator(char *soubor, int pocet)
     return 0;
 }
 
+/** Tato funkce by měla vyhledat v binární
+databázi soubor všechny osoby odpovídající daným vlastnostem a vypsat je pomocí
+funkce void vypis(osoba o) na obrazovku.
+
+Vlastnosti osob, které budou při vyhledávání zkoumány,
+určují jednotlivé znaky řetězce kriteria 
+ - znak "j" pro jméno osoby,
+ - "p" pro příjmení,
+ - "n" pro datum narození,
+ - "d" pro den narození,
+ - "m" pro měsíc narození,
+ - "r" pro rok narození,
+ - "P" pro pohlaví a
+ - "s" pro stav),
+za kterým pak následují vyhledávané hodnoty těchto vlastností.
+*/
 int vyhledej(char *soubor, char *kriteria, ...)
 {
-   printf("funkci %s() v souboru %d na radku %d DOPLNTE!!!\n", __func__, __FILE__, __LINE__); exit(EXIT_FAILURE);
+   FILE *fdata;
+   osoba osoba;
+   size_t items;
+//1. pro kazde kriterium vyhledavacich podminek (spojenymi AND) si udelame promennou
+//a inicialuzujem NULL hodnotou prislusneho typu
+//2. nebo mist flag pro kazde kriterium, pak je mozne kriterium IS NULL, ale NULL hodnoty v databazi nejsou
+   int  nkrit=0; //pocet kriterii
+   char j[DELKA+1] = "";
+   char p[DELKA+1] = "";
+   char d = 0;
+   char m = 0;
+   int  r = 0;
+   POHLAVI P = 0;
+   STAV s    = 0;
+   va_list args;
+   int i=0;
+   int matched;
+
+   va_start(args, kriteria);
+   nkrit = strlen(kriteria);//to neni zcela presne, neosetri "jjj" apod
+   for (i=0; kriteria[i]; i++) {
+       switch (kriteria[i]) {
+       case 'j': strncpy(j, va_arg(args, char *), DELKA); break;//strncpy(): buffer overflow!!!!!!
+       case 'p': strncpy(p, va_arg(args, char *), DELKA); break;
+       case 'd': d = va_arg(args, int/*char*/); break; //Note: char literal 'x' je typu int !!!
+       case 'm': m = va_arg(args, int/*char*/); break;
+       case 'r': r = va_arg(args, int); break;
+       case 'P': P = va_arg(args, int); break;//Note: enum je zpravidla int!!! ale neni to 100% jistota!
+       case 's': s = va_arg(args, int); break;
+       default:
+         ;//todo: error, ignorovat nelze?
+       }
+   }
+   va_end(args);
+   fdata = fopen(soubor, "r");//todo perror()?
+
+   while (1) {
+       items = fread(&osoba, sizeof osoba, 1, fdata);//toto perror()
+       if (feof(fdata)) {//fread() nevraci EOF!
+	  break;
+       }
+     //testujeme kriteria, je mezi nimi AND?
+       matched = 0;
+       if (*j && strcmp(j, osoba.jmeno)==0) { matched++; }
+       if (*p && strcmp(p, osoba.prijmeni)==0) { matched++; }
+       if ( d && d==osoba.narozen.den)   { matched++; }
+       if ( m && m==osoba.narozen.mesic) { matched++; }
+       if ( r && r==osoba.narozen.rok)   { matched++; }
+       if ( P && P==osoba.pohlavi)   { matched++; }
+       if ( s && s==osoba.stav)   { matched++; }
+     //match-uje ve vsech zadanych kriteriich?
+       if (nkrit == matched) {
+          vypis(osoba);
+       }
+
+   }
+
+   fclose(fdata);//todo perror()?
+   return 0;
 }
 
 void vypis(osoba o)

@@ -6,8 +6,9 @@ jednotkove-vektory : LDFLAGS = -lm
 
 
 
+databaze-osob \
 jednotkove-vektory \
-databaze-osob : FORCE
+ : FORCE
 	$(CC) -o $@ $@.c $(LDFLAGS) && ./$@
 
 
